@@ -37,12 +37,12 @@
         <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script>
-            window.onload = function() {
-                var thisPeer = new Peer();
-                $("id-text").text("You ID is: " + thisPeer.id)
-                console.log("Bruh")
-                console.log(thisPeer)
-            }
+            var thisPeer = new Peer();
+
+            thisPeer.on('open', function(id) {
+                $("id-text").text("You ID is: " + id)
+	            console.log('My peer ID is: ' + id);
+            });
         </script>
     </body>
 </html>
