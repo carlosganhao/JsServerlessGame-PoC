@@ -1,6 +1,8 @@
 # JsServerlessGame-PoC
 This repo serves as a **Proof of Concept** for a multiplayer game using [PeerJS](https://peerjs.com) and [Github Pages](https://pages.github.com).
 
+To try the game out you can do so [here](https://carlosganhao.github.io/JsServerlessGame-PoC/)
+
 ### The Concept
 The idea is very simple, in order to make a serveless peer to peer multiplayer game, we use [PeerJS](https://peerjs.com) to brokerage the Peer connections, keeping all the connection logic client-side. Then using [Github Pages](https://pages.github.com) we host the static html page, and since all the connections reside in client-side javascript, we can make games or other apps, mostly for free.
 
