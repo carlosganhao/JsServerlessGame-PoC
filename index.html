@@ -23,10 +23,11 @@
                     <button class="btn btn-outline-secondary" type="button" id="id-disconnect-button" onclick="DisconnectConnection()">Disconnect</button>
                 </div>
             </div>
-            <div class="row py-2 w-100">
+            <div class="row py-2 w-100" id="player-status-container">
                 <span class="col-6 align-middle text-center" id="player-move-text">You havent played yet</span>
                 <span class="col-6 align-middle text-center" id="enemy-move-text">Oponent hasnt played yet</span>
             </div>
+            <span class="align-middle py-2" id="last-game-text">You won last game</span>
             <span class="align-middle py-2" id="won-text">You won 0/0</span>
         </div>
         <div class="d-flex flex-column flex-grow-1 justify-content-evenly flex-fill">
@@ -49,6 +50,8 @@
             var connection = null;
             $("#connected-to-form").hide()
             $("#won-text").hide()
+            $("#player-status-container").hide()
+            $("#last-game-text").hide()
 
             $("#rock-button").on("click", function() {
                 Play("rock")
@@ -102,6 +105,9 @@
             {
                 $("#connect-to-form").show()
                 $("#connected-to-form").hide()
+                $("#player-status-container").hide()
+                $("#won-text").hide()
+                $("#last-game-text").hide()
             }
 
             function ShowConnectedUI(id)
@@ -109,6 +115,7 @@
                 $("#connect-to-form").hide()
                 $("#connected-to-form").show()
                 $("#id-connected").val(id)
+                $("#player-status-container").show()
             }
 
             function SetupConnection(conn)
@@ -164,14 +171,17 @@
                     if(youPlayed == enemyPlayed)
                     {
                         console.log("Draw")
+                        $("#last-game-text").text("Last")
                     }
                     else if((youPlayed == "rock" && enemyPlayed == "paper") || (youPlayed == "paper" && enemyPlayed == "scissors") || (youPlayed == "scissors" && enemyPlayed == "rock"))
                     {
                         console.log("Lose")
+                        $("#last-game-text").text("You lost last game")
                     }
                     else
                     {
                         console.log("Win")
+                        $("#last-game-text").text("You won last game")
                         wonGames++;
                     }
                     
@@ -181,6 +191,7 @@
                    
                     $("#won-text").show()
                     $("#won-text").text("You won " + wonGames + "/" + totalGames)
+                    $("#last-game-text").show()
                     $("#player-move-text").text("You played havent played yet")
                     $("#enemy-move-text").text("Oponent hasnt played yet")
                 }
