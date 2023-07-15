@@ -14,7 +14,7 @@
             <div id="connection-container" class="w-100">
                 <div class="input-group w-50 py-2 m-auto" id="connect-to-form">
                     <div class="input-group-text" id="btnGroupAddon">Connect to Id:</div>
-                    <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
+                    <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon" disabled>
                     <button class="btn btn-outline-secondary" type="button" id="id-submit-button" onclick="ConnectToId()">Connect</button>
                 </div>
                 <div class="input-group w-50 py-2 m-auto" id="connected-to-form">
@@ -86,10 +86,11 @@
                 $("#connected-to-form").hide()
             }
 
-            function ShowConnectedUI()
+            function ShowConnectedUI(id)
             {
                 $("#connect-to-form").hide()
                 $("#connected-to-form").show()
+                $("#connected-to-form").val(id)
             }
 
             function SetupConnection(conn)
