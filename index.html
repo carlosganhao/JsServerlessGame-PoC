@@ -30,7 +30,7 @@
             <span class="align-middle py-2" id="last-game-text">You won last game</span>
             <span class="align-middle py-2" id="won-text">You won 0/0</span>
         </div>
-        <div class="d-flex flex-column flex-grow-1 justify-content-evenly flex-fill">
+        <div class="d-flex flex-column flex-grow-1 justify-content-evenly flex-fill" id="controls-container">
             <button type="button" class="btn btn-secondary mx-5" id="rock-button">
                 ROCK
             </button>
@@ -52,6 +52,7 @@
             $("#won-text").hide()
             $("#player-status-container").hide()
             $("#last-game-text").hide()
+            $("#controls-container").hide()
 
             $("#rock-button").on("click", function() {
                 Play("rock")
@@ -98,6 +99,11 @@
                 connection.close()
                 connection = null
 
+                youPlayed = null
+                enemyPlayed = null
+                totalGames = 0
+                wonGames = 0
+
                 ShowConnectToUI()
             }
 
@@ -108,6 +114,7 @@
                 $("#player-status-container").hide()
                 $("#won-text").hide()
                 $("#last-game-text").hide()
+                $("#controls-container").hide()
             }
 
             function ShowConnectedUI(id)
@@ -116,6 +123,7 @@
                 $("#connected-to-form").show()
                 $("#id-connected").val(id)
                 $("#player-status-container").show()
+                $("#controls-container").show()
             }
 
             function SetupConnection(conn)
