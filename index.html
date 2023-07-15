@@ -48,9 +48,15 @@
             var connection = null;
             $("#connected-to-form").hide()
 
-            $("#rock-button").click(Play("rock"))
-            $("#paper-button").click(Play("paper"))
-            $("#scissors-button").click(Play("scissors"))
+            $("#rock-button").on("click", function() {
+                Play("rock")
+            })
+            $("#paper-button").on("click", function() {
+                Play("paper")
+            })
+            $("#scissors-button").on("click", function() {
+                Play("scissors")
+            })
 
             var youPlayed = null;
             var enemyPlayed = null;
