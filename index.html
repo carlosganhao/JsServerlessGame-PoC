@@ -23,7 +23,7 @@
                     <button class="btn btn-outline-secondary" type="button" id="id-disconnect-button" onclick="DisconnectConnection()">Disconnect</button>
                 </div>
             </div>
-            <div class="row py-2">
+            <div class="row py-2 w-100">
                 <span class="col-6 align-middle" id="player-move-text">You havent played yet</span>
                 <span class="col-6 align-middle" id="enemy-move-text">Oponent hasnt played yet</span>
             </div>
@@ -125,6 +125,7 @@
                         console.log("Recieved", data.move)
                         enemyPlayed = data.move
                         $("#enemy-move-text").text("Oponent played " + enemyPlayed)
+                        ResolveMoves()
                     }
                 });
 
@@ -140,7 +141,6 @@
 
             function Play(move)
             {
-                console.log("Tried to play", move)
                 if(connection != null && youPlayed == null)
                 {
                     console.log("Played", move)
@@ -150,6 +150,8 @@
                     })
                     youPlayed = move;
                     $("#player-move-text").text("You played " + youPlayed)
+
+                    ResolveMoves()
                 }
             }
 
