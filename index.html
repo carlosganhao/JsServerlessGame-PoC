@@ -11,10 +11,17 @@
         <div class="d-flex flex-column flex-fill justify-content-center align-items-center">
             <span class="align-middle py-2">Establishing connection...</span>
             <span class="align-middle py-2" id="id-text">You ID is: </span>
-            <div class="input-group w-50 py-2">
-                <div class="input-group-text" id="btnGroupAddon">Connect to Id:</div>
-                <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
-                <button class="btn btn-outline-secondary" type="button" id="id-submit-button" onclick="ConnectToId()">Button</button>
+            <div id="connection-container">
+                <div class="input-group w-50 py-2" id="connect-to-form">
+                    <div class="input-group-text" id="btnGroupAddon">Connect to Id:</div>
+                    <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
+                    <button class="btn btn-outline-secondary" type="button" id="id-submit-button" onclick="ConnectToId()">Connect</button>
+                </div>
+                <div class="input-group w-50 py-2" id="connected-to-form" hidden>
+                    <div class="input-group-text" id="btnGroupAddon">Connected to:</div>
+                    <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
+                    <button class="btn btn-outline-secondary" type="button" id="id-disconnect-button" onclick="">Disconnect</button>
+                </div>
             </div>
             <div class="row py-2">
                 <span class="col-6 align-middle">You havent played yet</span>
@@ -40,6 +47,8 @@
             var thisPeer = new Peer();
             var connection = null;
 
+
+
             thisPeer.on('open', function(id) {
                 $("#id-text").text("You ID is: " + id)
 	            console.log('My peer ID is: ' + id);
@@ -48,6 +57,7 @@
             thisPeer.on('connection', function(conn) {
                 console.log(conn)
                 connection = conn
+                ShowConnectedUI()
                 SetupConnection(conn)
                 console.log("Connected!")
             })
@@ -56,8 +66,31 @@
             {
                 var otherId = $("#id-connect").val()
                 connection = thisPeer.connect(otherId)
-                console.log("Connecting")
+                console.log("Connecting to", otherId)
+
+                ShowConnectedUI()
+
                 SetupConnection(connection)
+            }
+
+            function DisconnectConnection()
+            {
+                connection.close()
+                connection = null
+
+                ShowConnectToUI()
+            }
+
+            function ShowConnectToUI()
+            {
+                $("#connect-to-form").show()
+                $("#connected-to-form").hide()
+            }
+
+            function ShowConnectedUI()
+            {
+                $("#connect-to-form").hide()
+                $("#connected-to-form").show()
             }
 
             function SetupConnection(conn)
@@ -68,6 +101,11 @@
 
                 conn.on('data', function(data) {
                     console.log('Received', data);
+                });
+
+                conn.on('close', function() {
+                    ShowConnectToUI()
+                    console.log('Disconnected');
                 });
 
                 conn.on("error", function(err) {
