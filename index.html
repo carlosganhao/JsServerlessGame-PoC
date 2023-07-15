@@ -13,8 +13,8 @@
             <span class="align-middle py-2" id="id-text">You ID is: </span>
             <div class="input-group w-50 py-2">
                 <div class="input-group-text" id="btnGroupAddon">Connect to Id:</div>
-                <input type="text" class="form-control" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
-                <button class="btn btn-outline-secondary" type="button" id="id-Submit-Button">Button</button>
+                <input type="text" class="form-control" id="id-connect" placeholder="Id here" aria-label="Id here" aria-describedby="btnGroupAddon">
+                <button class="btn btn-outline-secondary" type="button" id="id-submit-button" onclick="ConnectToId">Button</button>
             </div>
             <div class="row py-2">
                 <span class="col-6 align-middle">You havent played yet</span>
@@ -38,11 +38,39 @@
         <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
         <script>
             var thisPeer = new Peer();
+            var connection = null;
 
             thisPeer.on('open', function(id) {
                 $("#id-text").text("You ID is: " + id)
 	            console.log('My peer ID is: ' + id);
             });
+
+            thisPeer.on('connection', function(conn) {
+                connection = conn
+                SetupConnection(conn)
+                console.log("Connected!")
+            })
+
+            function ConnectToId()
+            {
+                var otherId = $("#id-connect").text()
+                connection = thisPeer.connect(otherId)
+                console.log("Connecting")
+                SetupConnection(connection)
+            }
+
+            function SetupConnection(conn)
+            {
+                conn.on('open', function() {
+                    // Receive messages
+                    conn.on('data', function(data) {
+                        console.log('Received', data);
+                    });
+
+                    // Send messages
+                    conn.send('Hello!');
+                });
+            }
         </script>
     </body>
 </html>
