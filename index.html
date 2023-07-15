@@ -46,6 +46,7 @@
             });
 
             thisPeer.on('connection', function(conn) {
+                console.log(conn)
                 connection = conn
                 SetupConnection(conn)
                 console.log("Connected!")
