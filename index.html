@@ -29,13 +29,13 @@
             </div>
         </div>
         <div class="d-flex flex-column flex-grow-1 justify-content-evenly flex-fill">
-            <button type="button" class="btn btn-secondary mx-5" onclick="Play('rock')">
+            <button type="button" class="btn btn-secondary mx-5" id="rock-button">
                 ROCK
             </button>
-            <button type="button" class="btn btn-secondary mx-5" onclick="Play('paper')">
+            <button type="button" class="btn btn-secondary mx-5" id="paper-button">
                 PAPER
             </button>
-            <button type="button" class="btn btn-secondary mx-5" onclick="Play('scissors')">
+            <button type="button" class="btn btn-secondary mx-5" id="scissors-button">
                 SCISSORS
             </button>
         </div>
@@ -46,7 +46,11 @@
         <script>
             var thisPeer = new Peer();
             var connection = null;
-            $("#connected-to-form").hide() 
+            $("#connected-to-form").hide()
+
+            $("#rock-button").on("click", Play("rock"))
+            $("#paper-button").on("click", Play("paper"))
+            $("#scissors-button").on("click", Play("scissors"))
 
             var youPlayed = null;
             var enemyPlayed = null;
