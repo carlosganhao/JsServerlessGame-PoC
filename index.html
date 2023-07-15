@@ -112,6 +112,7 @@
                     }
                     else if(data.type = 'move' || enemyPlayed != null)
                     {
+                        console.log("Recieved", data.move)
                         enemyPlayed = data.move
                         $("#enemy-move-text").text("Oponent played " + enemyPlayed)
                     }
@@ -131,6 +132,7 @@
             {
                 if(connection != null && youPlayed != null)
                 {
+                    console.log("Played", move)
                     connection.send({
                         type: "move",
                         move: move
