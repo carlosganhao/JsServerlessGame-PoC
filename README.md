@@ -1,5 +1,5 @@
 # JsServerlessGame-PoC
-This repo serves as a **Proof of Concept** for a multiplayer game using [PeerJS](https://peerjs.com) and [Github Pages](https://pages.github.com).
+This repo serves as a **Proof of Concept** for a multiplayer game using [PeerJS](https://peerjs.com) and [Github Pages](https://pages.github.com). The game implemented was Rock, Paper, Scissors.
 
 To try the game out you can do so [here](https://carlosganhao.github.io/JsServerlessGame-PoC/)
 
