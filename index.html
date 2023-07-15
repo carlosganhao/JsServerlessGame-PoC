@@ -63,14 +63,22 @@
             function SetupConnection(conn)
             {
                 conn.on('open', function() {
-                    // Receive messages
-                    conn.on('data', function(data) {
-                        console.log('Received', data);
-                    });
-
-                    // Send messages
-                    conn.send('Hello!');
+                    conn.send('Heart beat from ' + thisPeer.id);
                 });
+
+                conn.on('data', function(data) {
+                    console.log('Received', data);
+                });
+
+                conn.on("error", function(err) {
+                    console.log('Connection Error:', data);
+                })
+            }
+
+            function CheckForCompatibility()
+            {
+                if (util.browser === 'Unsupported')
+                    console.log("Cannot use this browser for peer connection.")
             }
         </script>
     </body>
