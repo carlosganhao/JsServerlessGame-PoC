@@ -127,7 +127,7 @@
                     else if(data.type = 'move' || enemyPlayed == null)
                     {
                         enemyPlayed = data.move
-                        $("#enemy-move-text").text("Oponent played " + enemyPlayed)
+                        $("#enemy-move-text").text("Oponent has played")
                         ResolveMoves()
                     }
                 });
@@ -174,14 +174,15 @@
                         console.log("Win")
                         wonGames++;
                     }
-
+                    
+                    totalGames++;
                     youPlayed = null;
                     enemyPlayed = null;
                    
                     $("#won-text").show()
                     $("#won-text").text("You won " + wonGames + "/" + totalGames)
                     $("#player-move-text").text("You played havent played yet")
-                    $("#enemy-move-text").text("Oponent played havent played yet")
+                    $("#enemy-move-text").text("Oponent hasnt played yet")
                 }
             }
 
