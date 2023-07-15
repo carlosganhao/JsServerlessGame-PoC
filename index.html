@@ -55,7 +55,7 @@
 
             function ConnectToId()
             {
-                var otherId = $("#id-connect").text()
+                var otherId = $("#id-connect").val()
                 connection = thisPeer.connect(otherId)
                 console.log("Connecting")
                 SetupConnection(connection)
