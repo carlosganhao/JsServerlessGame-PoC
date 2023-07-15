@@ -56,7 +56,7 @@
             thisPeer.on('connection', function(conn) {
                 console.log(conn)
                 connection = conn
-                ShowConnectedUI()
+                ShowConnectedUI(conn.peer)
                 SetupConnection(conn)
                 console.log("Connected!")
             })
@@ -67,7 +67,7 @@
                 connection = thisPeer.connect(otherId)
                 console.log("Connecting to", otherId)
 
-                ShowConnectedUI()
+                ShowConnectedUI(otherId)
 
                 SetupConnection(connection)
             }
