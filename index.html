@@ -114,7 +114,7 @@
                     if(data.type == 'message') {
                         console.log(data.message)
                     }
-                    else if(data.type = 'move' || enemyPlayed != null)
+                    else if(data.type = 'move' || enemyPlayed == null)
                     {
                         console.log("Recieved", data.move)
                         enemyPlayed = data.move
@@ -134,7 +134,7 @@
 
             function Play(move)
             {
-                if(connection != null && youPlayed != null)
+                if(connection != null && youPlayed == null)
                 {
                     console.log("Played", move)
                     connection.send({
