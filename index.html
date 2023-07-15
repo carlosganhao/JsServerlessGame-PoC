@@ -9,7 +9,7 @@
     <body class="d-flex flex-column vh-100">
         <h1>Rock Paper Scissors</h1>
         <div class="d-flex flex-column flex-fill justify-content-center align-items-center">
-            <span class="align-middle py-2">Establishing connection...</span>
+            <span id="connecting-text" class="align-middle py-2">Establishing connection...</span>
             <span class="align-middle py-2" id="id-text">You ID is: </span>
             <div id="connection-container" class="w-100">
                 <div class="input-group w-50 py-2 m-auto" id="connect-to-form">
@@ -24,18 +24,18 @@
                 </div>
             </div>
             <div class="row py-2">
-                <span class="col-6 align-middle">You havent played yet</span>
-                <span class="col-6 align-middle">Oponent hasnt played yet</span>
+                <span class="col-6 align-middle" id="player-move-text">You havent played yet</span>
+                <span class="col-6 align-middle" id="enemy-move-text">Oponent hasnt played yet</span>
             </div>
         </div>
         <div class="d-flex flex-column flex-grow-1 justify-content-evenly flex-fill">
-            <button type="button" class="btn btn-secondary mx-5">
+            <button type="button" class="btn btn-secondary mx-5" onclick="Play('rock')">
                 ROCK
             </button>
-            <button type="button" class="btn btn-secondary mx-5">
+            <button type="button" class="btn btn-secondary mx-5" onclick="Play('paper')">
                 PAPER
             </button>
-            <button type="button" class="btn btn-secondary mx-5">
+            <button type="button" class="btn btn-secondary mx-5" onclick="Play('scissors')">
                 SCISSORS
             </button>
         </div>
@@ -46,10 +46,14 @@
         <script>
             var thisPeer = new Peer();
             var connection = null;
-            $("#connected-to-form").hide()  
+            $("#connected-to-form").hide() 
+
+            var youPlayed = null;
+            var enemyPlayed = null;
 
             thisPeer.on('open', function(id) {
                 $("#id-text").text("You ID is: " + id)
+                $("#connecting-text").hide()
 	            console.log('My peer ID is: ' + id);
             });
 
@@ -96,11 +100,21 @@
             function SetupConnection(conn)
             {
                 conn.on('open', function() {
-                    conn.send('Heart beat from ' + thisPeer.id);
+                    conn.send({
+                        type: "message",
+                        message: 'Heart beat from ' + thisPeer.id,
+                    });
                 });
 
                 conn.on('data', function(data) {
-                    console.log('Received', data);
+                    if(data.type == 'message') {
+                        console.log(data.message)
+                    }
+                    else if(data.type = 'move' || enemyPlayed != null)
+                    {
+                        enemyPlayed = data.move
+                        $("#enemy-move-text").text("Oponent played " + enemyPlayed)
+                    }
                 });
 
                 conn.on('close', function() {
@@ -111,6 +125,41 @@
                 conn.on("error", function(err) {
                     console.log('Connection Error:', data);
                 })
+            }
+
+            function Play(move)
+            {
+                if(connection != null && youPlayed != null)
+                {
+                    connection.send({
+                        type: "move",
+                        move: move
+                    })
+                    youPlayed = move;
+                    $("#player-move-text").text("You played " + youPlayed)
+                }
+            }
+
+            function ResolveMoves()
+            {
+                if(youPlayed != null && enemyPlayed != null)
+                {
+                    if(youPlayed == enemyPlayed)
+                    {
+                        console.log("Draw")
+                    }
+                    else if((youPlayed == "rock" && enemyPlayed == "paper") || (youPlayed == "paper" && enemyPlayed == "scissors") || (youPlayed == "scissors" && enemyPlayed == "rock"))
+                    {
+                        console.log("Lose")
+                    }
+                    else
+                    {
+                        console.log("Win")
+                    }
+
+                    youPlayed = null;
+                    enemyPlayed = null;
+                }
             }
 
             function CheckForCompatibility()
